@@ -80,11 +80,11 @@ app.UseSwaggerUI();
 
 app.UseReDoc(c =>
 {
-    c.DocumentTitle = "QuickOrder Pedido API Documentation";
+    c.DocumentTitle = "QuickOrder Atendimento API Documentation";
     c.SpecUrl = "/swagger/v1/swagger.json";
 });
 
-app.RegisterPedidoController();
+app.RegisterAtendimentoController();
 app.RegisterHealthController();
 
 app.ConfigureHealthCheckEndpoints();

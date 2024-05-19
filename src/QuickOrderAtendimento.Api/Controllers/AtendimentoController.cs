@@ -4,9 +4,9 @@ using QuickOrderAtendimento.Domain.Enums;
 
 namespace QuickOrderAtendimento.Api.Controllers
 {
-    public static class PedidoController
+    public static class AtendimentAtendimentoController
     {
-        public static void RegisterPedidoController(this WebApplication app)
+        public static void RegisterAtendimentoController(this WebApplication app)
         {
             app.MapGet("/consultarpedido/{id}", async ([FromServices] IPedidoObterUseCase pedidoObterUseCase, string id) =>
             {

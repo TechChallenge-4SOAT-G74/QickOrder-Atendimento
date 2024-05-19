@@ -33,7 +33,7 @@ namespace QuickOrderAtendimento.IoC
                 .AddMongoDb(
                     mongodbConnectionString: configurationMongo.ConnectionString,
                     mongoDatabaseName: configurationMongo.DatabaseName,
-                    name: "Mongo - QuickOrderDB-Pedido",
+                    name: "Mongo - QuickOrderDB-Atendimento",
                     timeout: TimeSpan.FromSeconds(29));
 
 
