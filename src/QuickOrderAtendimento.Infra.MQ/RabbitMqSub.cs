@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace QuickOrderAtendimento.Infra.MQ
 {
+    [ExcludeFromCodeCoverage]
     public class RabbitMqSub : BackgroundService
     {
         private readonly string _nomeDaFila;

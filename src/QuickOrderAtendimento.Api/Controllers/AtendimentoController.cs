@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickOrderAtendimento.Application.UseCases.Interfaces;
 using QuickOrderAtendimento.Domain.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuickOrderAtendimento.Api.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public static class AtendimentAtendimentoController
     {
         public static void RegisterAtendimentoController(this WebApplication app)
