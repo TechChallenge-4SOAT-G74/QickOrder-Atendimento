@@ -1,22 +1,24 @@
 ﻿using QuickOrderAtendimento.Application.Dtos.Base;
 using QuickOrderAtendimento.Application.UseCases.Interfaces;
 using QuickOrderAtendimento.Domain.Adapters;
+using QuickOrderAtendimento.Domain.Entities;
+using QuickOrderAtendimento.Infra.MQ;
 
 
 namespace QuickOrderAtendimento.Application.UseCases
 {
-    public class PedidoExcluirUseCase : PedidoUseCaseBase, IPedidoExcluirUseCase
+    public class AtendimentoExcluirUseCase : AtendimentoUseCaseBase, IAtendimentoExcluirUseCase
     {
-        private readonly ICarrinhoGateway _carrinhoGateway;
         private readonly IPedidoGateway _pedidoGateway;
+        private readonly IRabbitMqPub<Pedido> _rabbitMqPub;
 
-
-        public PedidoExcluirUseCase(ICarrinhoGateway carrinhoGateway,
+        public AtendimentoExcluirUseCase(
             IPedidoStatusGateway pedidoStatusGateway,
-            IPedidoGateway pedidoGateway) : base(carrinhoGateway, pedidoStatusGateway, pedidoGateway)
+            IPedidoGateway pedidoGateway,
+            IRabbitMqPub<Pedido> rabbitMqPub) : base(pedidoStatusGateway)
         {
-            _carrinhoGateway = carrinhoGateway;
             _pedidoGateway = pedidoGateway;
+            _rabbitMqPub = rabbitMqPub;
         }
 
         public async Task<ServiceResult> CancelarPedido(string codigoPedido, string statusPedido)
@@ -31,18 +33,15 @@ namespace QuickOrderAtendimento.Application.UseCases
                     result.AddError("Pedido não encontrado.");
                     return result;
                 }
-                _pedidoGateway.Delete(pedido.Id.ToString());
 
-                if (pedido.CarrinhoId != null)
-                {
-                    var carrinho = await _carrinhoGateway.Get(pedido.CarrinhoId);
-                    if (carrinho != null)
-                        _carrinhoGateway.Delete(carrinho.Id.ToString());
+                pedido.StatusPedido = statusPedido;
+                pedido.DataHoraFinalizado = DateTime.Now;
 
-                    await AlterarStatusPedido(codigoPedido, statusPedido);
+                _pedidoGateway.Update(pedido);
 
-                    await LimparCarrinho(codigoPedido);
-                }
+                await AlterarStatusPedidoBase(codigoPedido, statusPedido);
+
+                _rabbitMqPub.Publicar(pedido, "Pedido", "Pedido_Atendimento");
             }
             catch (Exception ex)
             {

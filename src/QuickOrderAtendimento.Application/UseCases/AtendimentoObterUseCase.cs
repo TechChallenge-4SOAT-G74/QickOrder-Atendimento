@@ -7,26 +7,26 @@ using QuickOrderAtendimento.Domain.Enums;
 
 namespace QuickOrderAtendimento.Application.UseCases
 {
-    public class PedidoObterUseCase : IPedidoObterUseCase
+    public class AtendimentoObterUseCase : IAtendimentoObterUseCase
     {
         private readonly IPedidoGateway _pedidoGateway;
         private readonly IPedidoStatusGateway _pedidoStatusGateway;
 
-        public PedidoObterUseCase(IPedidoGateway pedidoGateway, IPedidoStatusGateway pedidoStatusGateway)
+        public AtendimentoObterUseCase(IPedidoGateway pedidoGateway, IPedidoStatusGateway pedidoStatusGateway)
         {
             _pedidoGateway = pedidoGateway;
             _pedidoStatusGateway = pedidoStatusGateway;
         }
 
-        public async Task<ServiceResult<PedidoDto>> ConsultarPedido(string id)
+        public async Task<ServiceResult<PedidoDto>> ConsultarPedido(string codigoPedido)
         {
             var result = new ServiceResult<PedidoDto>();
             try
             {
-                var pedido = await _pedidoGateway.Get(id);
+                var pedido = await _pedidoGateway.Get(codigoPedido);
 
 
-                var fila = await _pedidoStatusGateway.GetValue("CodigoPedido", id);
+                var fila = await _pedidoStatusGateway.GetValue("CodigoPedido", codigoPedido);
 
 
                 if (pedido == null || fila == null)
@@ -44,9 +44,8 @@ namespace QuickOrderAtendimento.Application.UseCases
                     Observacao = pedido.Observacao,
                     PedidoPago = pedido.PedidoPago,
                     ValorPedido = pedido.ValorPedido,
-                    ProdutoPedido = SetListaProdutos(pedido?.Produtos),
+                    ProdutosPedido = SetListaProdutos(pedido?.Produtos),
                     StatusPedido = fila.StatusPedido,
-                    CarrinhoId = pedido.CarrinhoId,
                 };
 
                 result.Data = pedidoDto;
@@ -58,7 +57,7 @@ namespace QuickOrderAtendimento.Application.UseCases
             return result;
         }
 
-        public async Task<ServiceResult<List<PedidoDto>>> ConsultarListaPedidos()
+        public async Task<ServiceResult<List<PedidoDto>>> ConsultarFilaPedidos()
         {
             var result = new ServiceResult<List<PedidoDto>>();
             try
@@ -70,8 +69,12 @@ namespace QuickOrderAtendimento.Application.UseCases
                 fila = fila.Where(x => !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Pago))
                        && !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.PendentePagamento))
                        && !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Finalizado))
+                       && !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.CanceladoCliente))
+                       && !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.CanceladoAtendimento))
+                       && !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.PendenteCancelamento))
                        && !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado)))
                         .OrderByDescending(x => (int)(EStatusPedido)Enum.Parse(typeof(EStatusPedido), x.StatusPedido)).OrderBy(x => x.DataAtualizacao);
+
 
                 var listaPedidos = new List<PedidoDto>();
 
@@ -97,9 +100,8 @@ namespace QuickOrderAtendimento.Application.UseCases
                         Observacao = pedidoFila.Observacao,
                         PedidoPago = pedidoFila.PedidoPago,
                         ValorPedido = pedidoFila.ValorPedido,
-                        ProdutoPedido = SetListaProdutos(pedidoFila?.Produtos),
+                        ProdutosPedido = SetListaProdutos(pedidoFila?.Produtos),
                         StatusPedido = item.StatusPedido,
-                        CarrinhoId = pedidoFila.CarrinhoId,
                     };
 
                     listaPedidos.Add(pedidoDto);
@@ -114,12 +116,12 @@ namespace QuickOrderAtendimento.Application.UseCases
             return result;
         }
 
-        private List<ProdutoPedidoDto> SetListaProdutos(List<ProdutoCarrinho> produtoCarrinho)
+        private List<ProdutoPedidoDto> SetListaProdutos(List<Produto> produto)
         {
             var listProdutoPedidoDto = new List<ProdutoPedidoDto>();
-            if (produtoCarrinho != null)
+            if (produto != null)
             {
-                foreach (var item in produtoCarrinho)
+                foreach (var item in produto)
                 {
                     var produtoPedidoDto = new ProdutoPedidoDto
                     {

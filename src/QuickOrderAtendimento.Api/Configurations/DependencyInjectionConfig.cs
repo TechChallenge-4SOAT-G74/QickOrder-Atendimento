@@ -1,7 +1,9 @@
 ﻿using QuickOrderAtendimento.IoC;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuickOrderAtendimento.Api.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public static class DependencyInjectionConfig
     {
         public static void AddDependencyInjectionConfiguration(this IServiceCollection services)

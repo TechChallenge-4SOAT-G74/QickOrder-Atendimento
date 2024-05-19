@@ -25,7 +25,7 @@ builder.Services.AddSingleton<IMongoDatabase>(options =>
 
     if (!string.IsNullOrEmpty(mongo))
     {
-        settings.DatabaseName = "quickorderdb-pedido";
+        settings.DatabaseName = "quickorderdb-atendimento";
         settings.ConnectionString = mongo;
     }
     else

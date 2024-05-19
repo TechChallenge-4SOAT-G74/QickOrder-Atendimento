@@ -1,6 +1,6 @@
 ﻿namespace QuickOrderAtendimento.Domain.Entities
 {
-    public class ProdutoItensCarrinho
+    public class ProdutoItens
     {
         public int ProdutoId { get; set; }
         public int ItemId { get; set; }

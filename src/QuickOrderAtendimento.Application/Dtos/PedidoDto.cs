@@ -10,8 +10,7 @@
         public string? Observacao { get; set; }
         public bool PedidoPago { get; set; }
         public string? StatusPedido { get; set; }
-        public string? CarrinhoId { get; set; }
-        public List<ProdutoPedidoDto>? ProdutoPedido { get; set; }
+        public List<ProdutoPedidoDto>? ProdutosPedido { get; set; }
 
     }
 }

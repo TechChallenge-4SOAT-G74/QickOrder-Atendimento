@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace QuickOrderAtendimento.Api.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public static class HealthController
     {
         public static void RegisterHealthController(this WebApplication app)

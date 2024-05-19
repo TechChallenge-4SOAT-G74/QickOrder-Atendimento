@@ -8,34 +8,25 @@ namespace QuickOrderAtendimento.Api.Controllers
     {
         public static void RegisterAtendimentoController(this WebApplication app)
         {
-            app.MapGet("/consultarpedido/{id}", async ([FromServices] IPedidoObterUseCase pedidoObterUseCase, string id) =>
+            app.MapGet("/consultarfilapedidos", async ([FromServices] IAtendimentoObterUseCase atendimentoObterUseCase) =>
             {
-                return Results.Ok(await pedidoObterUseCase.ConsultarPedido(id));
+                return Results.Ok(await atendimentoObterUseCase.ConsultarFilaPedidos());
             });
 
-            app.MapGet("/consultarlistapedidos", async ([FromServices] IPedidoObterUseCase pedidoObterUseCase) =>
+            app.MapGet("/consultarpedido/{codigoPedido}", async ([FromServices] IAtendimentoObterUseCase atendimentoObterUseCase, string codigoPedido) =>
             {
-                return Results.Ok(await pedidoObterUseCase.ConsultarListaPedidos());
+                return Results.Ok(await atendimentoObterUseCase.ConsultarPedido(codigoPedido));
             });
 
-            app.MapPut("/finalizarcarrinho/{numeroCliente}", async ([FromServices] IPedidoAtualizarUseCase pedidoAtualizarUseCase, int numeroCliente) =>
+            app.MapPut("/alterarstatuspedido/{id}", async ([FromServices] IAtendimentoAtualizarUseCase atendimentoAtualizarUseCase, string codigoPedido, string statusPedido) =>
             {
-                return Results.Ok(await pedidoAtualizarUseCase.FinalizarCarrinho(numeroCliente));
+                return Results.Ok(await atendimentoAtualizarUseCase.AlterarStatusPedido(codigoPedido, statusPedido));
             });
 
-            app.MapPut("/confirmarpedido/{codigoPedido}", async ([FromServices] IPedidoAtualizarUseCase pedidoAtualizarUseCase, string codigoPedido) =>
-            {
-                return Results.Ok(await pedidoAtualizarUseCase.ConfirmarPedido(codigoPedido));
-            });
 
-            app.MapDelete("/cancelarpedido/{codigoPedido}", async ([FromServices] IPedidoExcluirUseCase pedidoExcluirUseCase, string codigoPedido) =>
+            app.MapDelete("/cancelarpedido/{codigoPedido}", async ([FromServices] IAtendimentoExcluirUseCase atendimentoExcluirUseCase, string codigoPedido) =>
             {
-                return Results.Ok(await pedidoExcluirUseCase.CancelarPedido(codigoPedido, EStatusPedido.CanceladoCliente.ToString()));
-            });
-
-            app.MapPost("/criarpedido/{idcliente}", async ([FromServices] IPedidoCriarUseCase pedidoCriarUseCase, int idcliente) =>
-            {
-                return Results.Ok(await pedidoCriarUseCase.CriarPedido(idcliente));
+                return Results.Ok(await atendimentoExcluirUseCase.CancelarPedido(codigoPedido, EStatusPedido.CanceladoCliente.ToString()));
             });
         }
     }
