@@ -64,7 +64,7 @@ namespace QuickOrderAtendimento.Application.UseCases
             {
                 var pedido = _pedidoGateway.GetAll().Result;
 
-                if (pedido == null || pedido.Count() == 0 )
+                if (pedido == null || pedido.Count() == 0)
                 {
                     result.AddError("Pedidos não localizado");
                     return result;
@@ -91,7 +91,7 @@ namespace QuickOrderAtendimento.Application.UseCases
 
                 foreach (var item in fila)
                 {
-                    var pedidoFila = pedido?.Where(x => x.Id.ToString().Equals(item.CodigoPedido)).FirstOrDefault();
+                    var pedidoFila = pedido?.FirstOrDefault(x => x.Id.ToString().Equals(item.CodigoPedido));
 
                     if (pedidoFila == null)
                         result.Data = new List<PedidoDto>();
@@ -105,7 +105,7 @@ namespace QuickOrderAtendimento.Application.UseCases
                         Observacao = pedidoFila.Observacao,
                         PedidoPago = pedidoFila.PedidoPago,
                         ValorPedido = pedidoFila.ValorPedido,
-                        ProdutosPedido = SetListaProdutos(pedidoFila?.Produtos),
+                        ProdutosPedido = SetListaProdutos(pedidoFila.Produtos),
                         StatusPedido = item.StatusPedido,
                     };
 
