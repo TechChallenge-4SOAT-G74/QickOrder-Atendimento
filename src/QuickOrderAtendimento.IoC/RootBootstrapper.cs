@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using QuickOrderAtendimento.Application.Events;
 using QuickOrderAtendimento.Application.UseCases;
 using QuickOrderAtendimento.Application.UseCases.Interfaces;
 using QuickOrderAtendimento.Domain.Adapters;
@@ -17,18 +18,19 @@ namespace QuickOrderAtendimento.IoC
         {
             var assemblyTypes = typeof(RootBootstrapper).Assembly.GetNoAbstractTypes();
 
+            services.AddHostedService<RabbitMqSub>();
             services.AddSingleton(typeof(IRabbitMqPub<>), typeof(RabbitMqPub<>));
-            services.AddScoped<IProcessaEvento, ProcessaEvento>();
+            services.AddSingleton<IProcessaEvento, ProcessaEvento>();
 
             //Repositories MongoDB
             services.AddSingleton<IMondoDBContext, MondoDBContext>();
-            services.AddScoped<IPedidoGateway, PedidoGateway>();
-            services.AddScoped<IPedidoStatusGateway, PedidoStatusGateway>();
+            services.AddSingleton<IPedidoGateway, PedidoGateway>();
+            services.AddSingleton<IPedidoStatusGateway, PedidoStatusGateway>();
 
             //UseCases
-            services.AddScoped<IAtendimentoAtualizarUseCase, AtendimentoAtualizarUseCase>();
-            services.AddScoped<IAtendimentoExcluirUseCase, AtendimentoExcluirUseCase>();
-            services.AddScoped<IAtendimentoObterUseCase, AtendimentoObterUseCase>();
+            services.AddSingleton<IAtendimentoAtualizarUseCase, AtendimentoAtualizarUseCase>();
+            services.AddSingleton<IAtendimentoExcluirUseCase, AtendimentoExcluirUseCase>();
+            services.AddSingleton<IAtendimentoObterUseCase, AtendimentoObterUseCase>();
 
 
         }

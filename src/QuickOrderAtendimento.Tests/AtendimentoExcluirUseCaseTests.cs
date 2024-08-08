@@ -1,4 +1,5 @@
 ﻿using Moq;
+using QuickOrderAtendimento.Application.Events;
 using QuickOrderAtendimento.Application.UseCases;
 using QuickOrderAtendimento.Domain.Adapters;
 using QuickOrderAtendimento.Domain.Entities;

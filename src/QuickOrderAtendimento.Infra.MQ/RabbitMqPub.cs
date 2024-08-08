@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using QuickOrderAtendimento.Application.Events;
 using RabbitMQ.Client;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;

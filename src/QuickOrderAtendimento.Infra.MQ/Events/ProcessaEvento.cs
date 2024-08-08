@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using QuickOrderAtendimento.Application.UseCases.Interfaces;
 using QuickOrderAtendimento.Domain.Adapters;
 using QuickOrderAtendimento.Domain.Entities;
 using System.Text.Json;
@@ -7,31 +7,20 @@ namespace QuickOrderAtendimento.Infra.MQ
 {
     public class ProcessaEvento : IProcessaEvento
     {
-        //private readonly IMapper _mapper;
-        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IPedidoGateway _pedidoGateway;
 
-        public ProcessaEvento(IServiceScopeFactory scopeFactory)
+        public ProcessaEvento(IPedidoGateway pedidoGateway)
         {
-            //_mapper = mapper;
-            _scopeFactory = scopeFactory;
+            _pedidoGateway = pedidoGateway;
         }
 
         public void Processa(string mensagem)
         {
+            var pedidoRead = JsonSerializer.Deserialize<Pedido>(mensagem);
 
-            using var scope = _scopeFactory.CreateScope();
+            if (pedidoRead != null ) 
+                _pedidoGateway.Create(pedidoRead);
 
-            var itemRepository = scope.ServiceProvider.GetRequiredService<IPedidoGateway>();
-
-            var restauranteRead = JsonSerializer.Deserialize<Pedido>(mensagem);
-
-            //var restaurante = _mapper.Map<Pedido>(restauranteReadDto);
-
-            //if (!itemRepository.ExisteRestauranteExterno(restaurante.Id))
-            //{
-            //    itemRepository.CreateRestaurante(restaurante);
-            //    itemRepository.SaveChanges();
-            //}
         }
     }
 }

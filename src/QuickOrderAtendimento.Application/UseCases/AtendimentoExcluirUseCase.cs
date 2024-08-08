@@ -1,8 +1,8 @@
 ﻿using QuickOrderAtendimento.Application.Dtos.Base;
+using QuickOrderAtendimento.Application.Events;
 using QuickOrderAtendimento.Application.UseCases.Interfaces;
 using QuickOrderAtendimento.Domain.Adapters;
 using QuickOrderAtendimento.Domain.Entities;
-using QuickOrderAtendimento.Infra.MQ;
 
 
 namespace QuickOrderAtendimento.Application.UseCases
@@ -41,7 +41,7 @@ namespace QuickOrderAtendimento.Application.UseCases
 
                 await AlterarStatusPedidoBase(codigoPedido, statusPedido);
 
-                _rabbitMqPub.Publicar(pedido, "Pedido", "Pedido_Atendimento");
+                _rabbitMqPub.Publicar(pedido, "Pedido", "Pedido_Cancelado");
             }
             catch (Exception ex)
             {

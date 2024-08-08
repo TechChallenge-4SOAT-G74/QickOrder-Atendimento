@@ -2,7 +2,6 @@
 using QuickOrderAtendimento.Application.UseCases;
 using QuickOrderAtendimento.Domain.Adapters;
 using QuickOrderAtendimento.Domain.Entities;
-using QuickOrderAtendimento.Infra.MQ;
 using Xunit;
 
 namespace QuickOrderAtendimento.Tests
@@ -13,14 +12,12 @@ namespace QuickOrderAtendimento.Tests
         private readonly AtendimentoAtualizarUseCase _atendimentoAtualizarUseCase;
         private readonly Mock<IPedidoGateway> _pedidoGatewayMock;
         private readonly Mock<IPedidoStatusGateway> _pedidoStatusGatewayMock;
-        private readonly Mock<IRabbitMqPub<Pedido>> _rabbitMqPubMock;
 
         public AtendimentoAtualizarUseCaseTests()
         {
             _pedidoGatewayMock = new Mock<IPedidoGateway>();
             _pedidoStatusGatewayMock = new Mock<IPedidoStatusGateway>();
-            _rabbitMqPubMock = new Mock<IRabbitMqPub<Pedido>>();
-            _atendimentoAtualizarUseCase = new AtendimentoAtualizarUseCase(_pedidoStatusGatewayMock.Object, _pedidoGatewayMock.Object, _rabbitMqPubMock.Object);
+            _atendimentoAtualizarUseCase = new AtendimentoAtualizarUseCase(_pedidoStatusGatewayMock.Object, _pedidoGatewayMock.Object);
         }
 
 
