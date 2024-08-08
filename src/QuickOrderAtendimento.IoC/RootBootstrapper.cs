@@ -25,12 +25,12 @@ namespace QuickOrderAtendimento.IoC
             //Repositories MongoDB
             services.AddSingleton<IMondoDBContext, MondoDBContext>();
             services.AddSingleton<IPedidoGateway, PedidoGateway>();
-            services.AddSingleton<IPedidoStatusGateway, PedidoStatusGateway>();
+            services.AddScoped<IPedidoStatusGateway, PedidoStatusGateway>();
 
             //UseCases
-            services.AddSingleton<IAtendimentoAtualizarUseCase, AtendimentoAtualizarUseCase>();
-            services.AddSingleton<IAtendimentoExcluirUseCase, AtendimentoExcluirUseCase>();
-            services.AddSingleton<IAtendimentoObterUseCase, AtendimentoObterUseCase>();
+            services.AddScoped<IAtendimentoAtualizarUseCase, AtendimentoAtualizarUseCase>();
+            services.AddScoped<IAtendimentoExcluirUseCase, AtendimentoExcluirUseCase>();
+            services.AddScoped<IAtendimentoObterUseCase, AtendimentoObterUseCase>();
 
 
         }

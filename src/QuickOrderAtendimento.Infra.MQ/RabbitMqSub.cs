@@ -29,7 +29,7 @@ namespace QuickOrderAtendimento.Infra.MQ
             IConnection connection = factory.CreateConnection();
 
             _channel = connection.CreateModel();
-            _nomeDaFila = "Pedido_Confirmado";
+            _nomeDaFila = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: _nomeDaFila, exchange: _exchange, routingKey: "Atendimento");
             _processaEvento = processaEvento;
         }
