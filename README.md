@@ -4,7 +4,7 @@ Projeto do Tech Challenge da FIAP - Fase 5
 
 **INTEGRANTES DO GRUPO 74**
 
-* Moisés Barboza de Figueiredo Junior
+* MoisÃ©s Barboza de Figueiredo Junior
 moises.figueiredo@gmail.com
 
 * Gabriela da Silva Lopes
@@ -17,18 +17,18 @@ fsouza.thadeu@gmail.com
 
 <br />
 
-## Microserviço - Atendimento
-Microserviço de atendimento é usuado como para organização e acompanhamento dos pedidos com pagamento aprovado. 
-seu pedido e submenta-o para pagamento. O pagamento do pedido é realizado no microserviço de pagamento, por comunicação sincrona 
-para gerar o QRCode de pagamento, e comunicação assíncrona para receber o resultado do pagamento.
-Pagamento aprovado gera comunicação assíncrona para o microserviço de atendimento. Pagamento recusado gera o cancelamento do pedido.
+## MicroserviÃ§o - Atendimento
+MicroserviÃ§o de atendimento Ã© usuado como para organizaÃ§Ã£o e acompanhamento dos pedidos com pagamento aprovado. 
+seu pedido e submenta-o para pagamento. O pagamento do pedido Ã© realizado no microserviÃ§o de pagamento, por comunicaÃ§Ã£o sincrona 
+para gerar o QRCode de pagamento, e comunicaÃ§Ã£o assÃ­ncrona para receber o resultado do pagamento.
+Pagamento aprovado gera comunicaÃ§Ã£o assÃ­ncrona para o microserviÃ§o de atendimento. Pagamento recusado gera o cancelamento do pedido.
 
 
 <br />
 
-## Pré-Requisitos
+## PrÃ©-Requisitos
 
-Antes de executar este projeto, os seguintes itens deverão estar instalados no computador:
+Antes de executar este projeto, os seguintes itens deverÃ£o estar instalados no computador:
 
 * Docker
 * Kubernetes
@@ -36,19 +36,19 @@ Antes de executar este projeto, os seguintes itens deverão estar instalados no c
 
 <br />
 
-Passo a passo - Instalação:
+Passo a passo - InstalaÃ§Ã£o:
 
-* Obter os scripts de instalação do kubernetes no repositório https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Infra-MicroServices-Kubernetes
+* Obter os scripts de instalaÃ§Ã£o do kubernetes no repositÃ³rio https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Infra-MicroServices-Kubernetes
 
-* Abrir alguma interface de linha de comando como, por exemplo, o **PowerShell** e digitar o comando `kubectl config get-contexts`. O resultado deverá ser conforme abaixo, com o contexto do **docker-desktop** selecionado:
+* Abrir alguma interface de linha de comando como, por exemplo, o **PowerShell** e digitar o comando `kubectl config get-contexts`. O resultado deverÃ¡ ser conforme abaixo, com o contexto do **docker-desktop** selecionado:
   
 <br />
 
 ![image](https://github.com/TechChallenge-4SOAT-G74/QuickOrder-backend/assets/44347862/ce7f5145-2ae7-44a0-82d5-fecf3c593589)
 
 
-* Caso o contexto do **docker-desktop** não esteja selecionado, selecionar o mesmo através do comando `kubectl config set-context docker-desktop`
-* Executar o comando `kubectl get all` para garantir que o cluster esteja limpo e assim prevenir que ocorram conflitos de portas nos passos posteriores. O resultado deverá ser esse:
+* Caso o contexto do **docker-desktop** nÃ£o esteja selecionado, selecionar o mesmo atravÃ©s do comando `kubectl config set-context docker-desktop`
+* Executar o comando `kubectl get all` para garantir que o cluster esteja limpo e assim prevenir que ocorram conflitos de portas nos passos posteriores. O resultado deverÃ¡ ser esse:
 
 <br />
 
@@ -57,9 +57,9 @@ Passo a passo - Instalação:
 
 <br />
 
-* Caso haja algum **pod, svc ou deployment** etc listado no passo anterior, limpar o cluster através do comando `kubectl delete all --all` e `kubectl delete pvc --all`
-* Baixe o projeto QuickOrder-Infra-Kubernetes do repositório https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Infra-MicroServices-Kubernetes.git
-* Verifique os sprits do repositório digitando `ls` 
+* Caso haja algum **pod, svc ou deployment** etc listado no passo anterior, limpar o cluster atravÃ©s do comando `kubectl delete all --all` e `kubectl delete pvc --all`
+* Baixe o projeto QuickOrder-Infra-Kubernetes do repositÃ³rio https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Infra-MicroServices-Kubernetes.git
+* Verifique os sprits do repositÃ³rio digitando `ls` 
 
 <br />
 
@@ -69,7 +69,7 @@ Passo a passo - Instalação:
 
 <br />
 
-* Aplicar os **scripts yml** dos **PersistentVolumeClaim** através do comando `kubect apply -f .\01-pvc\`:
+* Aplicar os **scripts yml** dos **PersistentVolumeClaim** atravÃ©s do comando `kubect apply -f .\01-pvc\`:
 
 <br />
 
@@ -79,7 +79,7 @@ Passo a passo - Instalação:
 
 <br />
 
-* Aplicar os **scripts yml** dos **Deployments** através do comando `kubectl apply -f .\02-deployments\`:
+* Aplicar os **scripts yml** dos **Deployments** atravÃ©s do comando `kubectl apply -f .\02-deployments\`:
 
 <br />
 
@@ -88,7 +88,7 @@ Passo a passo - Instalação:
 
 <br />
 
-* Aplicar os **scripts yml** dos **Services** através do comando `kubectl apply -f .\03-services\`:
+* Aplicar os **scripts yml** dos **Services** atravÃ©s do comando `kubectl apply -f .\03-services\`:
 
 <br />
 
@@ -98,7 +98,7 @@ Passo a passo - Instalação:
 
 <br />
 
-* Executar comando `kubectl get all` para verificar a criação dos itens dos passos anteriores. O resultado deverá ser similar ao listado abaixo:
+* Executar comando `kubectl get all` para verificar a criaÃ§Ã£o dos itens dos passos anteriores. O resultado deverÃ¡ ser similar ao listado abaixo:
 
 <br />
 
@@ -107,8 +107,9 @@ Passo a passo - Instalação:
 
 <br />
 
-* Abrir o browser e digitar o seguinte endereço **http://localhost:30000/swagger/**. O swagger da Api deverá ser exibido, indicando que a subida da aplicação ocorreu com sucesso:
+* Abrir o browser e digitar o seguinte endereÃ§o **http://localhost:30000/swagger/**. O swagger da Api deverÃ¡ ser exibido, indicando que a subida da aplicaÃ§Ã£o ocorreu com sucesso:
 
 <br />
 
-![image](https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Produto/assets/19378661/d3616035-b416-49ea-92ae-3360795ae189)
+![image](https://github.com/user-attachments/assets/04b8495d-4bf7-41a7-bf45-584e03f3c088)
+
